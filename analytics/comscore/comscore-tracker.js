@@ -76,7 +76,7 @@
     },
     _contentKeywords: function(keywords='') {
       if(keywords.substr(-1)!=='|') keywords += '|';
-      keywords += '|' + pageURL.replace(/\//g, '|');
+      keywords += pageURL.replace(/\//g, '|');
       return keywords
     },
     _websafeTitle: function(title) {
