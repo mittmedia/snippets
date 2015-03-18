@@ -70,11 +70,11 @@
       var contentKeywords = this._trackingParams.content_keywords;
       var pageURL = document.URL;
       pageURL = pageURL.replace("http://www.","").replace("http://","");
-      this._trackingParams.content_keywords = this._contetKeywords(contentKeywords);
+      this._trackingParams.content_keywords = this._contentKeywords(contentKeywords);
       this._trackingParams.name = this._websafeTitle(this._trackingParams.name) + '.page';
       return this._ComScoreTrackingURL + this._queryFromParams();
     },
-    _contetKeywords: function(keywords='') {
+    _contentKeywords: function(keywords='') {
       if(keywords.substr(-1)!=='|') keywords += '|';
       keywords += '|' + pageURL.replace(/\//g, '|');
       return keywords
