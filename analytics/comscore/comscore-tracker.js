@@ -74,7 +74,7 @@
       this._trackingParams.name = this._websafeTitle(this._trackingParams.name) + '.page';
       return this._ComScoreTrackingURL + this._queryFromParams();
     },
-    _contentKeywords: function(keywords='') {
+    _contentKeywords: function(keywords) {
       if(keywords.substr(-1)!=='|') keywords += '|';
       keywords += pageURL.replace(/\//g, '|');
       return keywords
