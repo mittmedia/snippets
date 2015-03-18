@@ -1,9 +1,11 @@
-(function() {
+(function (document) {
+  'use strict';
   var ComScoreTracker = {
-    startTracking: function(params) {
+
+    startTracking: function (params) {
       var trackerImg;
       this._extendDefaultParams(params);
-      this._trackingParams['m_session'] = this._fetchTrackingID();
+      this._trackingParams.m_session = this._fetchTrackingID();
       trackerImg = this._prepareTrackerImg();
       this._renderTrackingPixel(trackerImg);
     },
@@ -25,33 +27,33 @@
       'Ã¶': 'o',
       ' ': '-'
     },
-    _extendDefaultParams: function(params) {
+    _extendDefaultParams: function (params) {
       var key, value;
       for (key in params) {
         value = params[key];
         this._trackingParams[key] = value;
       }
     },
-    _fetchTrackingID: function() {
+    _fetchTrackingID: function () {
       var name = '_csid' + '=';
       var allCookies = document.cookie.split(';');
-      for(var i=0; i<allCookies.length; i++) {
+      for (var i = 0; i < allCookies.length; i++) {
           var c = allCookies[i];
-          while (c.charAt(0)==' ') c = c.substring(1);
-          if (c.indexOf(name) == 0) {
-            trackingID = c.substring(name.length, c.length)
+          while (c.charAt(0) == ' ') c = c.substring(1);
+          if (c.indexOf(name) === 0) {
+            var trackingID = c.substring(name.length, c.length);
             // extends the cookie ttl and returns the value
             return this._createTrackingID(trackingID);
           }
       }
       // create new tracking id / cookie
-      return this._createTrackingID()
+      return this._createTrackingID();
     },
-    _createTrackingID: function(trackingID) {
+    _createTrackingID: function (trackingID) {
       var expires;
       var d = new Date();
       // trackingID = [timestamp + random string]
-      if(trackingID == undefined) {
+      if (trackingID === undefined) {
         trackingID = Date.now() + Math.random().toString(36).substring(7);
       }
       d.setTime(d.getTime() + (365*24*60*60*1000));
@@ -59,27 +61,27 @@
       document.cookie = '_csid' + "=" + trackingID + "; " + expires;
       return trackingID;
     },
-    _prepareTrackerImg: function() {
+    _prepareTrackerImg: function () {
       var trackerImg;
       trackerImg     = document.createElement("img");
       trackerImg.id  = 'comscore-tracker';
       trackerImg.src = this._generatePixelTrackingUrl();
       return trackerImg;
     },
-    _generatePixelTrackingUrl: function() {
+    _generatePixelTrackingUrl: function () {
       var contentKeywords = this._trackingParams.content_keywords;
       var pageURL = document.URL;
       pageURL = pageURL.replace("http://www.","").replace("http://","");
-      this._trackingParams.content_keywords = this._contentKeywords(contentKeywords);
+      this._trackingParams.content_keywords = this._contentKeywords(contentKeywords, pageURL);
       this._trackingParams.name = this._websafeTitle(this._trackingParams.name) + '.page';
       return this._ComScoreTrackingURL + this._queryFromParams();
     },
-    _contentKeywords: function(keywords) {
-      if(keywords.substr(-1)!=='|') keywords += '|';
+    _contentKeywords: function(keywords, pageURL) {
+      if (keywords.substr(-1) !== '|') keywords += '|';
       keywords += pageURL.replace(/\//g, '|');
-      return keywords
+      return keywords;
     },
-    _websafeTitle: function(title) {
+    _websafeTitle: function (title) {
       // presents page title as a websafe string
       return title.toLowerCase().replace(/[^a-zA-Z0-9]/g, (function(_this) {
         return function(s) {
@@ -87,16 +89,16 @@
         };
       })(this));
     },
-    _queryFromParams: function() {
+    _queryFromParams: function () {
       var key, value;
       var queryParams = [];
       for (key in this._trackingParams) {
         value = this._trackingParams[key];
-        queryParams.push(key + '=' + value)
+        queryParams.push(key + '=' + value);
       }
       return queryParams.join('&');
     },
-    _renderTrackingPixel: function(img) {
+    _renderTrackingPixel: function (img) {
       img.width   = '1px';
       img.height  = '1px';
       document.body.appendChild(img);
@@ -111,7 +113,7 @@
   // 'content_keywords' describes the page content. Use pipe separated keywords.
   // 'name' is the current page title.
 
-  setTimeout(function(CST){
+  setTimeout( function (CST){
     CST.startTracking(
       {
         a_site: 'mainsite',
@@ -120,4 +122,4 @@
       }
     );
   }, 100, ComScoreTracker);
-})();
+})(document);
