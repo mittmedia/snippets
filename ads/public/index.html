@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<script src="js/jquery.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/backbone.js"></script>
+</head>
+
+<body>
+<script>
+var adsQueue = [];
+window.SiteObject = {
+  site_id: 'allehanda'
+};
+</script>
+
+<div class="ad-placement layout_panorama_1" style="background: #EEE">
+  <div class="ad-container d_panorama_1">
+    <div id="d_panorama_1" data-fusion-placement="d_panorama_1" data-fusion-id="d_panorama_1" data-layout="panorama">
+    </div>
+  </div>
+  <script>
+    adsQueue.push({ type: "panorama", index: 1, device: "d", renderNow: true, layout: '', autoIndex: false });
+  </script>
+</div>
+
+<script src="js/02_postscribe_swfobject.js"></script>
+<script src="js/03_fusion_script.js"></script>
+<script src="js/sparrowjs.js"></script>
+<script src="js/regions.js"></script>
+<script src="js/ads-partners.js"></script>
+<script src="js/ads.js"></script>
+</body>
+
+</html>
