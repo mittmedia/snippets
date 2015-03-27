@@ -8,7 +8,7 @@
       this._renderTrackingPixel(trackerImg);
     },
     // --- private ---
-    _ComScoreTrackingURL: 'http://b.scorecardresearch.com/p?',
+    _ComScoreTrackingURL: '//b.scorecardresearch.com/p?',
     // tracking params, using snake case for Comscore
     _trackingParams: {
       c1:               '2',        // static MittMedia number
@@ -70,11 +70,11 @@
       var contentKeywords = this._trackingParams.content_keywords;
       var pageURL = window.location.href;
       pageURL = pageURL.replace("http://www.","").replace("http://","");
-      this._trackingParams.content_keywords = this._contentKeywords(contentKeywords);
+      this._trackingParams.content_keywords = this._contentKeywords(contentKeywords, pageURL);
       this._trackingParams.name = this._websafeTitle(this._trackingParams.name) + '.page';
       return this._ComScoreTrackingURL + this._queryFromParams();
     },
-    _contentKeywords: function(keywords) {
+    _contentKeywords: function(keywords, pageURL) {
       if(keywords.substr(-1)!=='|') keywords += '|';
       keywords += pageURL.replace(/\//g, '|');
       return keywords
@@ -115,7 +115,7 @@
     CST.startTracking(
       {
         a_site: 'mainsite',
-        content_keywords: 'keyword1|keyword2',
+        content_keywords: 'external',
         name: document.title
       }
     );
