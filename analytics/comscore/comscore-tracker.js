@@ -68,7 +68,7 @@
     },
     _generatePixelTrackingUrl: function() {
       var contentKeywords = this._trackingParams.content_keywords;
-      var pageURL = document.URL;
+      var pageURL = window.location.href;
       pageURL = pageURL.replace("http://www.","").replace("http://","");
       this._trackingParams.content_keywords = this._contentKeywords(contentKeywords);
       this._trackingParams.name = this._websafeTitle(this._trackingParams.name) + '.page';
@@ -119,5 +119,5 @@
         name: document.title
       }
     );
-  }, 100, ComScoreTracker);
+  }, 300, ComScoreTracker);
 })();
