@@ -115,7 +115,7 @@
     CST.startTracking(
       {
         a_site: 'mainsite',
-        content_keywords: 'external|blogg',
+        content_keywords: 'external|blog',
         name: document.title
       }
     );
