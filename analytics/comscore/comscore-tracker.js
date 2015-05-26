@@ -16,7 +16,7 @@
       ns_site:          'mainsite', // use 'testsite' for staging environment
       a_site:           'mainsite', // name of the site ID in ComScore.
       name:             '',         // title of ther current page
-      content_keywords: '',         // keywords, tags and categories (pipe separated string)
+      m_content_keywords: '',         // keywords, tags and categories (pipe separated string)
       m_session:        ''          // user tracking id, auto generated in _fetchTrackingID()
     },
     _alphabetReplaceChars: {
@@ -67,7 +67,7 @@
       return trackerImg;
     },
     _generatePixelTrackingUrl: function() {
-      var contentKeywords = this._trackingParams.content_keywords;
+      var contentKeywords = this._trackingParams.m_content_keywords;
       var pageURL = window.location.href;
       pageURL = pageURL.replace("http://www.","").replace("http://","");
       this._trackingParams.content_keywords = this._contentKeywords(contentKeywords, pageURL);
@@ -108,14 +108,14 @@
   //    bandypuls, dalademokraten, halsingesommar, hudiknytt, mittgavle, soderhamnnytt,
   //    th, 100p-stromsund, arbetarbladet, bollnasnytt, dt, helahalsingland, ltz, mittmedia, st
   // - - - - - - - -
-  // 'content_keywords' describes the page content. Use pipe separated keywords.
+  // 'm_content_keywords' describes the page content. Use pipe separated keywords.
   // 'name' is the current page title.
 
   setTimeout(function(CST){
     CST.startTracking(
       {
         a_site: 'mainsite',
-        content_keywords: 'external',
+        m_content_keywords: 'external',
         name: document.title
       }
     );
