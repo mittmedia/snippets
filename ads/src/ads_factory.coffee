@@ -1,4 +1,4 @@
-@AdsFactory =
+window.AdsFactory =
   currentDevice: 'desktop'
   init: (adClass) ->
     # Setup device detection
@@ -81,5 +81,3 @@
       return 0 if a.queueIndex == b.queueIndex
       a.queueIndex < b.queueIndex ? -1 : 1
     return indexedAds.concat(autoIndexedAds)
-
-AdsFactory.init(Ad)

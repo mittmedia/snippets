@@ -1,5 +1,5 @@
 @AdsLoaderFusion =
-  #dependencies: ['geo_location']
+  dependencies: ['geo_location']
   adCategories: [
     "sport"
     "familj"
@@ -15,7 +15,6 @@
   adsAttributes: {}
 
   loadAd: (ad) ->
-    console.log ad
     # checks if ad content was delivered in previously requested ad layouts
     adspace_id = ad.device + '_' + ad.type + '_' + ad.index
     if @loadedLayouts.indexOf(ad.layout) == -1 # Is ad layout loaded?
@@ -60,6 +59,7 @@
 
   _renderPayloadOnPage: (adName) ->
     payload = @recievedAds[adName][0].attributes.Payload
+    console.log payload
 
     # Fix iframes here!
     @_setupIframe(adName) if IframeFixer.ad_is_iframe(payload)
@@ -104,6 +104,7 @@
 
   _loadNetworkAd: (key, payload) ->
     models = sparrow.models
+    console.log 'network'
     models.admeta_handler.process_ad(key) if payload.indexOf('admeta') > -1
     models.emediate_handler.process_ad(key, payload) if payload.indexOf('emediate') > -1
     sparrow.models.widespace_handler.process_ad(key, payload) if payload.indexOf('widespace') > -1
@@ -146,19 +147,16 @@
 
   _getMediaZone: ->
     # media zone is in the format of 'mittmedia_ab.mittmedia.region.city'
-    #region    = @_getRegion()
+    region    = @_getRegion()
     mediazone = @_getMediaZoneFromContentKeywords()
     mediazone = @_getMediaZoneFromGeoLocation() if !mediazone
-    mediazone = 'ovrigt' if !mediazone || mediazone == region
-    return [@fusionBaseOptions.mediazone, mediazone].join('.')
+    mediazone = '' if !mediazone || mediazone == region
+    return [@fusionBaseOptions.mediazone, region, mediazone].join('.')
 
   _getRegion: ->
-    if @_getMediaZoneFromGeoLocation() && @_allowedGeolocationSites(window.SiteObject.site_id)
+    if @_getMediaZoneFromGeoLocation()
       city = @_getCity(@_getMediaZoneFromGeoLocation())
       return city.region if city
-    siteID = SiteObject.site_id.toLowerCase()
-    for region in SiteObject.regions
-      return region.name if region.site_id.toLowerCase() == siteID
 
   _getMediaZoneFromContentKeywords: ->
     for keyword in (window.content_keywords || [])
@@ -167,7 +165,7 @@
     return false
 
   _getMediaZoneFromGeoLocation: ->
-    if sparrow.cookies.is_set('consumer_location') && (window.SiteObject.site_id == 'HH' || @_allowedGeolocationSites(window.SiteObject.site_id))
+    if sparrow.cookies.is_set('consumer_location')
       return sparrow.cookies.get('consumer_location')
     else
       return false
@@ -203,15 +201,8 @@
       if city
         city.region = r.name
         city.site_id = r.site_id
-    return city if city && (city.site_id == window.SiteObject.site_id || @_allowedGeolocationSites(window.SiteObject.site_id))
+    return city if city
     return false
-
-  _allowedGeolocationSites: (siteID) ->
-    allowedSites = [
-      'TEST'
-      #'BP'
-    ]
-    _.contains(allowedSites, siteID)
 
   # Replaces unwanted chars in a 'websafe' string
   # Returns a lowercase string

@@ -73,11 +73,12 @@ new class extends sparrow.BaseModule
       protect:  true
       defLoad:  true
       tagId:    id
-      site:     window.sparrow.models.site_module.get('site_id')
+      site:     window.SiteObject.site_id
       page:     page + " #{@get('ads_count')}"
       rank:     placements[device][ad_format].rank
       width:    ad_size.width
       height:   ad_size.height
+    console.log ADM_PL
     @set_rank(device, ad_format)
     #if window.SiteObject.debug == "true"
     window.Admeta.processImpressions() if window.Admeta

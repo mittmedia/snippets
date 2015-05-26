@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Title</title>
-<script src="js/jquery.js"></script>
-<script src="js/underscore-min.js"></script>
-<script src="js/backbone.js"></script>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 
 <body>
-<script>
-var adsQueue = [];
-window.SiteObject = {
-  site_id: 'allehanda'
-};
-</script>
-
-<div class="ad-placement layout_panorama_1" style="background: #EEE">
-  <div class="ad-container d_panorama_1">
-    <div id="d_panorama_1" data-fusion-placement="d_panorama_1" data-fusion-id="d_panorama_1" data-layout="panorama">
+  <!-- START MittMedia Ad - Panaorma placement #1 -->
+    <div class="ad-placement layout_panorama_1" style="background: #EEE">
+      <div class="ad-container d_panorama_1">
+        <div id="d_panorama_1" data-fusion-placement="d_panorama_1" data-fusion-id="d_panorama_1" data-layout="panorama">
+        </div>
+      </div>
+      <script>
+        if(typeof adsQueue === 'undefined') var adsQueue = [];
+        adsQueue.push({
+          type: "panorama",
+          index: 1,
+          device: "d",
+          renderNow: true,
+          layout: '',
+          autoIndex: false
+        });
+      </script>
     </div>
-  </div>
-  <script>
-    adsQueue.push({ type: "panorama", index: 1, device: "d", renderNow: true, layout: '', autoIndex: false });
-  </script>
-</div>
+  <!-- END MittMedia Ad - Panaorma placement #1 -->
 
-<script src="js/02_postscribe_swfobject.js"></script>
-<script src="js/03_fusion_script.js"></script>
-<script src="js/sparrowjs.js"></script>
-<script src="js/regions.js"></script>
-<script src="js/ads-partners.js"></script>
-<script src="js/ads.js"></script>
+  <!-- START MittMedia Ads loader. Place at end of <body> -->
+    <script src="js/jquery.js"></script>
+    <script src="js/underscore-min.js"></script>
+    <script src="js/backbone.js"></script>
+    <script src="js/mittmedia-ads-lib.js"></script>
+    <script src="js/mittmedia-regions.js"></script>
+    <script src="js/mittmedia-ads.js"></script>
+    <script>
+      AdsFactory.init(Ad);
+    </script>
+  <!-- END MittMedia Ads loader -->
 </body>
 
 </html>
