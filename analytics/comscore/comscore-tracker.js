@@ -70,7 +70,7 @@
       var contentKeywords = this._trackingParams.m_content_keywords;
       var pageURL = window.location.href;
       pageURL = pageURL.replace("http://www.","").replace("http://","");
-      this._trackingParams.content_keywords = this._contentKeywords(contentKeywords, pageURL);
+      this._trackingParams.m_content_keywords = this._contentKeywords(contentKeywords, pageURL);
       this._trackingParams.name = this._websafeTitle(this._trackingParams.name) + '.page';
       return this._ComScoreTrackingURL + this._queryFromParams();
     },
