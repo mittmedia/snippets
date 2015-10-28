@@ -114,7 +114,7 @@
     CST.startTracking(
       {
         a_site: 'mainsite',
-        content_keywords: dataLayer[0].general.pageCategory + '|' + dataLayer[0].general.pageName,
+        m_content_keywords: 'payway|' + dataLayer[0].general.pageCategory + '|' + dataLayer[0].general.pageName,
         name: document.title
       }
     );
