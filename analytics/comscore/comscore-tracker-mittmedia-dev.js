@@ -114,7 +114,7 @@
   setTimeout(function(CST){
     CST.startTracking(
       {
-        a_site: 'mainsite',
+        a_site: 'lasarshop',
         m_content_keywords: 'mittmedia-dev',
         name: document.title
       }
