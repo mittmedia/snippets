@@ -110,6 +110,7 @@
         m_content_keywords: 'etidning',
         name: document.title,
         m_session: ADEPRIMO-ANGER-ANVÄNDARID-HÄR
+        m_tulo_id: OCH-SAMMA-ID-HÄR
       }
     );
   }, 300, ComScoreTracker);
