@@ -3,7 +3,9 @@
     startTracking: function(params) {
       var trackerImg;
       this._extendDefaultParams(params);
-      this._trackingParams['m_session'] = this._fetchTrackingID();
+      if(this._trackingParams['m_session'] == '') {
+        this._trackingParams['m_session'] = this._fetchTrackingID();
+      }
       trackerImg = this._prepareTrackerImg();
       this._renderTrackingPixel(trackerImg);
     },
@@ -106,7 +108,8 @@
       {
         a_site: 'etidning',
         m_content_keywords: 'etidning',
-        name: document.title
+        name: document.title,
+        m_session: ADEPRIMO-ANGER-ANVÄNDARID-HÄR
       }
     );
   }, 300, ComScoreTracker);
