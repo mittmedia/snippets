@@ -5,6 +5,8 @@
       this._extendDefaultParams(params);
       if(this._trackingParams['m_session'] == '') {
         this._trackingParams['m_session'] = this._fetchTrackingID();
+      } else {
+        this._createTrackingID(this._trackingParams['m_session']);
       }
       trackerImg = this._prepareTrackerImg();
       this._renderTrackingPixel(trackerImg);
@@ -18,7 +20,6 @@
       ns_site:          'mainsite',
       a_site:           'mainsite',
       name:             '',
-      content_keywords: '',
       m_session:        ''
     },
     _alphabetReplaceChars: {
@@ -59,6 +60,8 @@
       d.setTime(d.getTime() + (365*24*60*60*1000));
       expires = "expires="+d.toUTCString();
       document.cookie = '_csid' + "=" + trackingID + "; " + expires;
+      document.cookie = 'UID' + "=" + trackingID + "; " + expires;
+      document.cookie = 'UIDR' + "=" + trackingID.substring(0, 10) + "; " + expires;
       return trackingID;
     },
     _prepareTrackerImg: function() {
@@ -109,8 +112,8 @@
         a_site: 'etidning',
         m_content_keywords: 'etidning',
         name: document.title,
-        m_session: ADEPRIMO-ANGER-ANVÄNDARID-HÄR,
-        m_tulo_id: OCH-SAMMA-ID-HÄR
+        m_session: "12345678",
+        m_tulo_id: "1234567"
       }
     );
   }, 300, ComScoreTracker);
