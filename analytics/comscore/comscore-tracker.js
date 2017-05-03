@@ -17,7 +17,10 @@
       a_site:           'mainsite', // name of the site ID in ComScore.
       name:             '',         // title of ther current page
       m_content_keywords: '',         // keywords, tags and categories (pipe separated string)
-      m_session:        ''          // user tracking id, auto generated in _fetchTrackingID()
+      m_session:        '',          // user tracking id, auto generated in _fetchTrackingID()
+      c7:               window.location.protocol + "//" + window.location.host + "/" + window.location.pathname,
+      c8:               document.title,
+      c9:               window.location.protocol + "//" + window.location.host + "/"
     },
     _alphabetReplaceChars: {
       'Ã¥': 'a',
