@@ -8,16 +8,19 @@
       this._renderTrackingPixel(trackerImg);
     },
     // --- private ---
-    _ComScoreTrackingURL: 'https://sb.scorecardresearch.com/p?',
+    _ComScoreTrackingURL: '//b.scorecardresearch.com/p?',
     // tracking params, using snake case for Comscore
     _trackingParams: {
       c1:               '2',        // static MittMedia number
       c2:               '16716221', // static MittMedia number
       ns_site:          'mainsite', // use 'testsite' for staging environment
-      a_site:           'mainsite', // name of the site ID in ComScore.
+      a_site:           'payway', // name of the site ID in ComScore.
       name:             '',         // title of ther current page
-      content_keywords: '',         // keywords, tags and categories (pipe separated string)
-      m_session:        ''          // user tracking id, auto generated in _fetchTrackingID()
+      m_content_keywords: '',         // keywords, tags and categories (pipe separated string)
+      m_session:        '',          // user tracking id, auto generated in _fetchTrackingID()
+      c7:               window.location.protocol + "//" + window.location.host + "/" + window.location.pathname,
+      c8:               document.title,
+      c9:               document.referrer
     },
     _alphabetReplaceChars: {
       'Ã¥': 'a',
@@ -44,7 +47,6 @@
             return this._createTrackingID(trackingID);
           }
       }
-      // create new tracking id / cookie
       return this._createTrackingID()
     },
     _createTrackingID: function(trackingID) {
@@ -67,9 +69,10 @@
       return trackerImg;
     },
     _generatePixelTrackingUrl: function() {
-      var contentKeywords = this._trackingParams.content_keywords;
+      var contentKeywords = this._trackingParams.m_content_keywords;
       var pageURL = window.location.href;
-      pageURL = pageURL.replace("http://www.","").replace("http://","").replace("https://","");
+      pageURL = pageURL.replace("http://www.","").replace("http://","");
+      this._trackingParams.m_content_keywords = this._contentKeywords(contentKeywords, pageURL);
       this._trackingParams.name = this._websafeTitle(this._trackingParams.name) + '.page';
       return this._ComScoreTrackingURL + this._queryFromParams();
     },
@@ -79,7 +82,6 @@
       return keywords
     },
     _websafeTitle: function(title) {
-      // presents page title as a websafe string
       return title.toLowerCase().replace(/[^a-zA-Z0-9]/g, (function(_this) {
         return function(s) {
           return (_this._alphabetReplaceChars[s] || "");
@@ -101,15 +103,6 @@
       document.body.appendChild(img);
     }
   };
-  // 'a_site' is the site name as registered in Comscore. If unsure, use 'mainsite'
-  // - - - sites - -
-  //    100p-krokom, allehanda, areidag, gd, hockeypuls, mittdalarna, op, test, 100p-ostersund,
-  //    bandypuls, dalademokraten, halsingesommar, hudiknytt, mittgavle, soderhamnnytt,
-  //    th, 100p-stromsund, arbetarbladet, bollnasnytt, dt, helahalsingland, ltz, mittmedia, st
-  // - - - - - - - -
-  // 'content_keywords' describes the page content. Use pipe separated keywords.
-  // 'name' is the current page title.
-
   setTimeout(function(CST){
     CST.startTracking(
       {
